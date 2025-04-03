@@ -1,13 +1,19 @@
 import { useState } from "react"
 import { Buttons } from "../reusableComponents/buttons"
 import { useNavigate } from "react-router"
+import TMDB from '../assets/images/theMovieDataBase.svg'
+import karateKid from '../assets/images/karateKid.jpg'
+import fatherHood from '../assets/images/fatherHood.jpg'
+import mazeRunner from '../assets/images/mazeRunner.jpg'
+import outpost from '../assets/images/theOutpost.jpg'
+import everything from '../assets/images/everythingEverything.jpg'
 
 const slides = [
-    {name: 'karate kid', src:'/src/App/assets/images/karateKid.jpg'},
-    {name: 'Father Hood', src:'/src/App/assets/images/fatherHood.jpg'},
-    {name: 'Maze Runner', src:'/src/App/assets/images/mazeRunner.jpg'},
-    {name: 'The outpost', src:'/src/App/assets/images/theOutpost.jpg'},
-    {name: 'Everything Everything', src:'/src/App/assets/images/everythingEverything.jpg'}
+    {name: 'karate kid', src:karateKid},
+    {name: 'Father Hood', src:fatherHood},
+    {name: 'Maze Runner', src:mazeRunner},
+    {name: 'The outpost', src:outpost},
+    {name: 'Everything Everything', src:everything}
 ]
 
 function LandingPage() {
@@ -16,6 +22,7 @@ function LandingPage() {
 
     return(
         <div className="transparent">
+            <img src={TMDB} alt="" />
             <h1 className="landscape: text-center mt-[10%] text-2xl font-bold md:text-4xl md:mt-[5%]
              xl:text-2xl xl:mt-[3%]">
                 ideal Movie Streamer
