@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+.transparent{
+    @apply h-[100vh] bg-gradient-to-b from-gray-500 to-gray-900 p-1.5 
+}
+
+.darkmode{
+    @apply bg-[rgb(22,21,21)] text-white h-[100vh] pt-9
+}
+
+.form{
+    @apply ml-[5vw] w-[90%] md:w-[70%] md:ml-[15vw] 
+    lg:bg-gray-900 lg:p-9 rounded-2xl lg:border-2 lg:border-white lg:w-[50%] lg:ml-[25%]
+    xl:w-[30%] xl:ml-[35%]
+}
+
+.form-error{
+    @apply text-red-600
+}

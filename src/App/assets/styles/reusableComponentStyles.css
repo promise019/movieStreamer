@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+.inputField{
+  @apply border-[0px] border-amber-50 rounded-[5px] mb-1 w-[100%] p-2 bg-black hover:border-2 xl:p-1 xl:mb-0.5
+}
+
+.registrationLogo{
+  @apply font-bold text-center mb-8
+}
+
+.checked{
+  @apply bg-green-500 text-white w-[100%] p-2 rounded-[5px] font-bold
+}
+
+.notChecked{
+  @apply bg-white  text-gray-700 w-[100%] p-2 rounded-[5px] font-bold
+}
+
+.spinner-background{
+  @apply bg-transparent w-[100vw] h-[100vh] z-2 absolute pt-[50%] md:pt-[20%] xl:pt-[10%]
+}
+
+.return{
+  @apply border-2 p-0.5 ml-2
+}
