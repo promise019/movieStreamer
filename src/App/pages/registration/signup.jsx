@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { Input } from "../../reusableComponents/input"
 import Logo from "../../reusableComponents/companyLogo"
 import { Buttons } from "../../reusableComponents/buttons"
@@ -7,15 +8,11 @@ import { emailValidator, nameValidation, passwordValidator } from "../../feature
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Spinner, SpinnerBackGround } from "../../reusableComponents/loadingComponent"
 import { ErrorBar } from "../../reusableComponents/error"
+import { auth } from "../../Authentication/auth";
 
-async function UserData(data) {
-  const response = await fetch('https://www.google.com',{
-    method:'POST',
-    body: JSON.stringify(data),
-    headers: {'content-type' : 'application/JSON'}
-  })
-
-  return response.json
+async function registerUser({userEmail, userpassword}) {
+  const userCredential = await createUserWithEmailAndPassword(auth, userEmail, userpassword)
+  return userCredential.user
 }
 
 function SignUpPage() {
@@ -29,7 +26,7 @@ function SignUpPage() {
     const queryClient = useQueryClient()
     const {isPending, mutate, error} = useMutation({
       mutationKey: queryClient.invalidateQueries(['userdata']),
-      mutationFn: UserData,
+      mutationFn: registerUser,
     })
 
     const navigate = useNavigate()
@@ -75,7 +72,7 @@ function SignUpPage() {
           }),
           console.log(`name: ${userData.name}, email:${userData.email} password: ${userData.password}`), 
           
-          mutate({userName: userData.name, userEmail: userData.email, userpassword: userData.password})
+          mutate({ userEmail: userData.email, userpassword: userData.password})
           break;
       }
 
