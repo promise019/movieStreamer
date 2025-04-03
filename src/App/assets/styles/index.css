@@ -2,6 +2,9 @@
 
 .transparent{
     @apply h-[100vh] bg-gradient-to-b from-gray-500 to-gray-900 p-1.5 
+    sm:from-gray-500 sm:to-gray-900
+    md:from-gray-500 md:to-gray-900
+    lg:from-gray-500 lg:to-gray-900
 }
 
 .darkmode{
@@ -15,5 +18,5 @@
 }
 
 .form-error{
-    @apply text-red-600
+    @apply text-red-600 sm:text-red-600 md:text-red-600 lg:text-red-600 
 }

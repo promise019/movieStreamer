@@ -51,14 +51,16 @@ function LandingPage() {
              <div className="flex justify-between p-2 mt-3">
 
              <Buttons onClick={()=> Navigate('/signup')}
-              className='bg-red-400 rounded-[10px] w-[30%] p-2 text-white'>
+              className='bg-red-400 rounded-[10px] w-[30%] p-2 text-white
+                sm:bg-red-400 md:bg-red-400'>
                 SignUp
              </Buttons>
 
              {' '}
 
              <Buttons onClick={()=> Navigate('/login')}
-              className='bg-green-400 rounded-[10px] w-[30%] p-2 text-white'>
+              className='bg-green-400 rounded-[10px] w-[30%] p-2 text-white
+                sm:bg-green-400 md:bg-green-400'>
                 Login
              </Buttons>
 
