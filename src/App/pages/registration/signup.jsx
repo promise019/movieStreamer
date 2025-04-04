@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react"
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { Input } from "../../reusableComponents/input"
 import Logo from "../../reusableComponents/companyLogo"
 import { Buttons } from "../../reusableComponents/buttons"
 import { Link, useNavigate } from "react-router"
 import { emailValidator, nameValidation, passwordValidator } from "../../features/formValidation"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Spinner, SpinnerBackGround } from "../../reusableComponents/loadingComponent"
 import { ErrorBar } from "../../reusableComponents/error"
-import { auth } from "../../Authentication/auth";
+import { createUserWithEmailAndPassword, auth } from "../../Authentication/auth"
 
-async function registerUser({userEmail, userpassword}) {
-  const userCredential = await createUserWithEmailAndPassword(auth, userEmail, userpassword)
-  return userCredential.user
-}
 
 function SignUpPage() {
 
@@ -23,14 +17,12 @@ function SignUpPage() {
         password: ''
     })
 
-    const queryClient = useQueryClient()
-    const {isPending, mutate, error} = useMutation({
-      mutationKey: queryClient.invalidateQueries(['userdata']),
-      mutationFn: registerUser,
-    })
+    
 
     const navigate = useNavigate()
 
+    const [user, setUser] = useState(null)
+    const [signupError, setSignupError] = (null)
     const [nameError, setNameError] = useState([])
     const [emailError, setEmailError] = useState([])
     const [passwordError, setPasswordError] = useState([])
@@ -47,6 +39,7 @@ function SignUpPage() {
       setPasswordError([])
       setNameError([])
     },[isPending])
+
 
     const validator = userData.name===''||
           !userData.email.endsWith('@gmail.com' || '@yahoomail.com') || userData.email.length < 3 ||
@@ -69,10 +62,21 @@ function SignUpPage() {
             name: '',
             email:'',
             password:''
-          }),
-          console.log(`name: ${userData.name}, email:${userData.email} password: ${userData.password}`), 
-          
-          mutate({ userEmail: userData.email, userpassword: userData.password})
+          })
+
+          async function submit() {
+            try {
+              const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password)
+              setUser(userCredential.user)
+              setSignupError(null)
+            } catch (error) {
+              setSignupError(error.message)
+            }
+          }
+
+          submit();
+
+          console.log(`name: ${userData.name}, email:${userData.email} password: ${userData.password}`)
           break;
       }
 
@@ -82,7 +86,7 @@ function SignUpPage() {
         <div className="darkmode">
 
         <ErrorBar >
-          {error ? error.message : ''}
+          {signupError}
         </ErrorBar>
 
         <Buttons onClick={()=> navigate('/landingPage')} className='return'>
@@ -91,7 +95,7 @@ function SignUpPage() {
         
           <Logo className='registrationLogo'/>
 
-           {isPending && 
+           {
             <SpinnerBackGround className='spinner-background'>
               <Spinner />
             </SpinnerBackGround> 
