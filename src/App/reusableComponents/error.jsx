@@ -1,6 +1,6 @@
 export function ErrorBar({className, children}) {
     return(
-        <div>
+        <div className={className}>
             {children}
         </div>
     )

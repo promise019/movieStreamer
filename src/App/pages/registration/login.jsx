@@ -1,21 +1,28 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Input } from "../../reusableComponents/input"
 import Logo from "../../reusableComponents/companyLogo"
 import { Buttons } from "../../reusableComponents/buttons"
 import { Link, useNavigate } from "react-router"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Spinner, SpinnerBackGround } from "../../reusableComponents/loadingComponent"
 import { ErrorBar } from "../../reusableComponents/error"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
-async function UserData(data) {
-  const response = await fetch('https://www.google.com',{
-    method:'POST',
-    body: JSON.stringify(data),
-    headers: {'content-type' : 'application/JSON'}
-  })
+const firebaseConfig = {
+  apiKey: "AIzaSyCqEtd6bGVUU-JFRp33s4_XQq92Qznt9ng",
+  authDomain: "moviestreamer-9f918.firebaseapp.com",
+  projectId: "moviestreamer-9f918",
+  storageBucket: "moviestreamer-9f918.firebasestorage.app",
+  messagingSenderId: "208583991212",
+  appId: "1:208583991212:web:5d1a0a98cf637d2120e409",
+  measurementId: "G-D0Z31LBZ6P"
+};
 
-  return response.json
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
 
 function LoginPage() {
 
@@ -24,17 +31,14 @@ function LoginPage() {
         password: ''
     })
 
-    const queryClient = useQueryClient()
-    const {isPending, mutate, error} = useMutation({
-      mutationKey: queryClient.invalidateQueries(['userdata']),
-      mutationFn: UserData,
-    })
+    const [firebaseError, setFirebaseError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
 
     const checkFormInput = userData.email === '' || userData.password.length < 8
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
       
           setUserData({
@@ -42,25 +46,47 @@ function LoginPage() {
             password:''
           })
 
+          setIsLoading(true)
+
+         await signInWithEmailAndPassword(auth, userData.email, userData.password)
+                .then(userCredential=>{
+                  const user = userCredential.user
+
+                  localStorage.setItem('movieStraemer user loggedin', JSON.stringify(user))
+                  console.log(user)
+                  setTimeout(()=>{
+                    navigate('/homepage')
+                  }, 3000)
+                  
+                })
+                .catch(error=>{
+                  const errorCode = error.code
+                  const errorMessage = error.message
+
+                  setIsLoading(false)
+
+                  setFirebaseError(errorMessage)
+                  console.log(`error code: ${errorCode}, error message: ${errorMessage}`)
+                })
+
           console.log(`email:${userData.email} password: ${userData.password}`)
-          mutate({userEmail: userData.email, userpassword: userData.password})
 
     }
 
     return(
         <div className="darkmode">
 
-        <ErrorBar >
-          {error ? error.message : ''}
-        </ErrorBar>
+          <ErrorBar className={firebaseError.length > 1 ? 'errorCreatingAccount' : 'successfullCreated'}>
+            {firebaseError.length > 1 ? 'wrong email or password' : 'successful'}
+          </ErrorBar>
         
-        <Buttons onClick={()=> navigate('/landingPage')} className='return'>
-          back
-        </Buttons>
+          <Buttons onClick={()=> navigate('/landingPage')} className='return'>
+            back
+          </Buttons>
 
           <Logo className='registrationLogo'/>
 
-           {isPending && 
+           {isLoading && 
             <SpinnerBackGround className='spinner-background'>
               <Spinner />
             </SpinnerBackGround> 

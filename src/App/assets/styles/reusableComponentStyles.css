@@ -23,3 +23,11 @@
 .return{
   @apply border-2 p-0.5 ml-2
 }
+
+.errorCreatingAccount{
+  @apply bg-red-500 -mt-9 mb-2 text-center
+}
+
+.successfullCreated{
+  @apply  bg-green-500 -mt-9 mb-2 text-center
+}

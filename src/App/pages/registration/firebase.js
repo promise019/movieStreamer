@@ -21,4 +21,4 @@
   const auth = getAuth();
   const db= getFirestore();
 
-  export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged };
+  export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
