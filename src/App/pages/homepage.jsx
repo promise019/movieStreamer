@@ -1,5 +1,11 @@
+import Header from "../layout/Header"
+
 function HomePage() {
-    return 'homepage'
+    return(
+        <main className="darkmode">
+            <Header/>
+        </main>
+    )
 }
 
 export default HomePage

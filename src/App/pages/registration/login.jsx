@@ -54,6 +54,7 @@ function LoginPage() {
 
                   localStorage.setItem('movieStraemer user loggedin', JSON.stringify(user))
                   console.log(user)
+                  setFirebaseError('successful')
                   setTimeout(()=>{
                     navigate('/homepage')
                   }, 3000)
@@ -76,8 +77,8 @@ function LoginPage() {
     return(
         <div className="darkmode">
 
-          <ErrorBar className={firebaseError.length > 1 ? 'errorCreatingAccount' : 'successfullCreated'}>
-            {firebaseError.length > 1 ? 'wrong email or password' : 'successful'}
+          <ErrorBar className={firebaseError === 'successful' ? 'successfullCreated' : 'errorCreatingAccount'}>
+            {firebaseError && firebaseError}
           </ErrorBar>
         
           <Buttons onClick={()=> navigate('/landingPage')} className='return'>

@@ -86,6 +86,7 @@ function SignUpPage() {
                 .then(userCredential=>{
                   const user = userCredential.user
                   console.log(user)
+                  setFirebaseError('account successfully created')
                   setTimeout(()=>{
                     navigate('/login')
                   }, 3000)
@@ -110,8 +111,8 @@ function SignUpPage() {
     return(
       <div className="darkmode">
 
-        <ErrorBar className={firebaseError.length > 1 ? 'errorCreatingAccount' : 'successfullCreated'}>
-          {firebaseError.length > 1 ? firebaseError : 'account successfully created'}
+        <ErrorBar className={firebaseError === 'account successfully created' ? 'successfullCreated' : 'errorCreatingAccount' }>
+          {firebaseError && firebaseError }
         </ErrorBar>
 
         <Buttons onClick={()=> navigate('/landingPage')} className='return'>

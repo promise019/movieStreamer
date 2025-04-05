@@ -31,3 +31,11 @@
 .successfullCreated{
   @apply  bg-green-500 -mt-9 mb-2 text-center
 }
+
+.activeLink{
+  @apply font-bold text-xl
+}
+
+.icon{
+  @apply w-5
+}
