@@ -8,7 +8,7 @@
 }
 
 .darkmode{
-    @apply bg-[rgb(22,21,21)] text-white h-[100vh] pt-9
+    @apply bg-[rgb(22,21,21)] text-white pt-9 h-[fit-content] pb-[60%] overflow-x-scroll
 }
 
 .form{

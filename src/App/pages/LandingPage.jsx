@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { Buttons } from "../reusableComponents/buttons"
 import { useNavigate } from "react-router"
-import TMDB from '../assets/images/theMovieDataBase.svg'
 import karateKid from '../assets/images/karateKid.jpg'
 import fatherHood from '../assets/images/fatherHood.jpg'
 import mazeRunner from '../assets/images/mazeRunner.jpg'
@@ -22,7 +21,6 @@ function LandingPage() {
 
     return(
         <div className="transparent">
-            <img src={TMDB} alt="" />
             <h1 className="landscape: text-center mt-[10%] text-2xl font-bold md:text-4xl md:mt-[5%]
              xl:text-2xl xl:mt-[3%]">
                 ideal Movie Streamer
